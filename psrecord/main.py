@@ -125,13 +125,19 @@ def monitor(pid, logfile=None, plot=None, duration=None, interval=None,
 
     if logfile:
         f = open(logfile, 'w')
-        f.write("# {0:12s} {1:12s} {2:12s} {3:12s}\n".format(
-            'Elapsed time'.center(12),
-            'CPU (%)'.center(12),
-            'Real (MB)'.center(12),
-            'Virtual (MB)'.center(12))
-        )
+        #f.write("# {0:12s} {1:12s} {2:12s} {3:12s}\n".format(
+        #    'Elapsed time'.center(12),
+        #    'CPU (%)'.center(12),
+        #    'Real (MB)'.center(12),
+        #    'Virtual (MB)'.center(12))
+        #)
 
+        f.write("{0},{1},{2},{3}\n".format(
+            'Elapsed time',
+            'CPU (%)',
+            'Real (MB)',
+            'Virtual (MB)')
+        )
     log = {}
     log['times'] = []
     log['cpu'] = []
@@ -184,8 +190,10 @@ def monitor(pid, logfile=None, plot=None, duration=None, interval=None,
                     current_mem_virtual += current_mem.vms / 1024. ** 2
 
             if logfile:
-                f.write("{0:12.3f} {1:12.3f} {2:12.3f} {3:12.3f}\n".format(
-                    current_time - start_time,
+                #f.write("{0:12.3f} {1:12.3f} {2:12.3f} {3:12.3f}\n".format(
+                f.write("{0},{1},{2},{3}\n".format(
+                    #current_time - start_time,
+                    current_time,
                     current_cpu,
                     current_mem_real,
                     current_mem_virtual))
@@ -232,3 +240,8 @@ def monitor(pid, logfile=None, plot=None, duration=None, interval=None,
             ax.grid()
 
             fig.savefig(plot)
+
+
+if __name__ == '__main__':
+    main()
+
